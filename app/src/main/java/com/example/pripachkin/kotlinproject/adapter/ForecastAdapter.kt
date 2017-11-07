@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso
 /**
  * Created by Pripachkin on 06.11.2017.
  */
-class ForecastAdapter(val data: ForecastList, val itemClickListener: OnItemClickListener)
+class ForecastAdapter(val data: ForecastList, val itemClickListener: (Forecast) -> Unit)
     : RecyclerView.Adapter<ForecastAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflate = LayoutInflater.from(parent.ctx).inflate(R.layout.item_forecast, parent, false)
@@ -28,7 +28,7 @@ class ForecastAdapter(val data: ForecastList, val itemClickListener: OnItemClick
 
     override fun getItemCount(): Int = data.size
 
-    class ViewHolder(val view: View, val itemClickListener: OnItemClickListener)
+    class ViewHolder(val view: View, val itemClick: (Forecast) -> Unit)
         : RecyclerView.ViewHolder(view) {
         private val iconView = view.findViewById<ImageView>(R.id.icon)
         private val dateView = view.findViewById<TextView>(R.id.date)
@@ -42,7 +42,7 @@ class ForecastAdapter(val data: ForecastList, val itemClickListener: OnItemClick
                 descriptionView.text = description
                 maxTemp.text = "$high"
                 minTemp.text = "$low"
-                view.setOnClickListener { itemClickListener(this) }
+                view.setOnClickListener { itemClick(this) }
             }
         }
 
